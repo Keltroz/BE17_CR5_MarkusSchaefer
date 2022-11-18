@@ -33,7 +33,7 @@ if ($_GET["id"]) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Review 4</title>
+    <title>Code Review 5</title>
     <?php require_once "components/boot.php" ?>
     <style type="text/CSS">
 
@@ -104,9 +104,6 @@ if ($_GET["id"]) {
                     <?= $list ?>
                 </tbody>
             </table>
-            <div class="button">
-                <button class='btn btn-primary mt-3' type="button" onclick="window.location.href='index.php'" style="width: 80px;">Back</button>
-            </div>
         </div>
 </body>
 

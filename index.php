@@ -105,9 +105,6 @@ if (mysqli_num_rows($result) > 0) {
                     <?= $list ?>
                 </tbody>
             </table>
-            <div class="button">
-                <button class='btn btn-primary' type="button" onclick="window.location.href='create.php'">Add Product</button>
-            </div>
         </div>
 </body>
 
