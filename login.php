@@ -67,14 +67,14 @@ require_once "components/db_connect.php";
                             <div class="row">
                                 <div class="col-md-12 mb-2 pb-2">
                                     <div class="form-outline">
-                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email" maxlength="40" value="<?php echo $email ?>" />
+                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email" maxlength="50" value="<?php echo $email ?>" />
                                         <span class="text-danger mx-2"><?php echo $emailError ?></span>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-4 pb-2">
                                     <div class="form-outline">
-                                        <input type="password" name="pass" class="form-control form-control-lg" placeholder="Your Password" maxlength="15" />
-                                        <span class="text-danger mx-2"><?php echo $passError ?></span>
+                                        <input type="password" name="password" class="form-control form-control-lg" placeholder="Your Password" maxlength="25" />
+                                        <span class="text-danger mx-2"><?php echo $passwordError ?></span>
                                     </div>
                                 </div>
                             </div>
