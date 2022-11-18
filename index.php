@@ -75,7 +75,13 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="login.php">Login</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -89,8 +95,6 @@ mysqli_close($connect);
                     <div class="card-body text-center mt-2">
                         <h1>Welcome to Shelty</h1>
                         <h3>Your shelter near you</h3>
-                        
-                        
                     </div>
                 </div>
             </div>

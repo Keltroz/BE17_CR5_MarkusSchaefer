@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once "components/db_connect.php";
 
 $list = "";
@@ -10,19 +12,33 @@ if ($_GET["id"]) {
 
     if (mysqli_num_rows($result) == 1) {
         while ($data = mysqli_fetch_assoc($result)) {
-            $list .=  "<tr><td class='text-center'><img class='image' src='pictures/" . $data['photo'] . "'></td>
-                        <td class='text-center'>" . $data['name'] . "</td>
-                        <td style='border-right: none; text-align: right;'>" . $data['size'] . "</td>
-                        <td style='border-left: none; text-align: left;'>" . $data['age'] . "</td>
-                        <td class='text-center'>" . $data['vaccinated'] . "</td>
-                        <td class='text-center'>" . $data['description'] . "</td>
-                        <td class='text-start'>" . $data['breed'] . "</td>
+            $list .=  "<tr><td rowspan='2' class='text-center'><img class='image img-fluid' src='pictures/" . $data['photo'] . "' style='width: 400px;'></td>
+                        <td>" . $data['name'] . "</td>
+                        <td>" . $data['size'] . "</td>
+                        <td>" . $data['age'] . "</td>
+                        <td>" . $data['vaccinated'] . "</td>
+                        <td>" . $data['breed'] . "</td>
+                        </tr>
+                        <tr>
+                        <td colspan='5'>" . $data['description'] . "</td>
                         </tr>";
         }
     } else {
         $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
     }
 }
+
+$query = "SELECT * FROM user WHERE user_id = {$_SESSION['user']}";
+$result2 = mysqli_query($connect, $query);
+$row2 = mysqli_fetch_assoc($result2);
+
+$fname = $row2['first_name'];
+$lname = $row2['last_name'];
+$email = $row2['email'];
+$picture = $row2['picture'];
+$status = $row2['status'];
+
+mysqli_close($connect);
 
 ?>
 
@@ -75,7 +91,20 @@ if ($_GET["id"]) {
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="logout.php?logout">Logout</a>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
+                    <li class="nav-item dropdown">
+                    <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= $email ?>
+                        </a>
+                        <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;"" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="dashboardUser.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
+                        </ul>
+                    </li>
                 </div>
             </div>
         </div>
@@ -85,12 +114,12 @@ if ($_GET["id"]) {
             <table class='table table-striped table-dark table-hover'>
                 <thead>
                     <tr>
-                        <th class="text-center" style="width:10%;">Image</th>
-                        <th class="text-center" style="width: 10%;">Title</th>
-                        <th class="text-center" colspan="2" style="width: 10%;">Author</th>
-                        <th class="text-center" style="width: 10%;">ISBN</th>
-                        <th class="text-center" style="width: 50%;">Description</th>
-                        <th class="text-center" style="width: 10%;">Availability</th>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Author</th>
+                        <th class="text-center">ISBN</th>
+                        <th class="text-center">Availability</th>
+                        <th class="text-center">Breed</th>
                     </tr>
                 </thead>
                 <tbody>

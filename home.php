@@ -52,7 +52,13 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="login.php">Login</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

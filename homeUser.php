@@ -22,7 +22,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $list .= "
         <tr>
-           <td><a href=''><img class='image' src='pictures/" . $row["photo"] . "'></a></td>
+           <td><img class='image' src='pictures/" . $row["photo"] . "'></td>
            <td>" . $row['breed'] . "</td>
            <td>" . $row['size'] . "</td>
            <td>" . $row['age'] . " years</td>
@@ -60,12 +60,6 @@ mysqli_close($connect);
 </head>
 
 <style type="text/CSS">
-    .btn-secondary {
-        text-align: center;
-        margin: auto;
-        width: 20%;
-    }
-
     .animals {
             width: 80%;
             margin: 0 auto;
@@ -76,26 +70,28 @@ mysqli_close($connect);
     tr {
         text-align: center;
         vertical-align: middle;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
     
     }
 
     .image {
-        width: 300px;
+        width: 200px;
     }
 </style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand mb-2">Shelter</a>
+            <a class="navbar-brand mb-1">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active mt-2" href="index.php">Home</a>
+                    <a class="nav-link active" href="index.php">Home</a>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active mt-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Animals
                         </a>
                         <ul class="dropdown-menu">
@@ -103,11 +99,13 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/seniorUser.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
                     <li class="nav-item dropdown">
                     <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $email ?>
                         </a>
-                        <a class="nav-link dropdown-toggle active" style="display:inline-block; text-decoration: none !important;"" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;"" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
@@ -120,10 +118,9 @@ mysqli_close($connect);
         </div>
     </nav>
 
-    </div>
     <div class="bg-container">
         <div class="animals">
-            <p class="h1 text-center font-monospace text-decoration-underline mb-5">Pets available</p>
+            <p class="h1 text-center text-decoration-underline mb-5">Pets Available</p>
             <table class='table table-striped table-dark table-hover'>
                 <thead>
                     <tr>

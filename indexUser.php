@@ -70,15 +70,15 @@ mysqli_close($connect);
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand mb-2">Shelter</a>
+            <a class="navbar-brand mb-1">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active mt-2" href="index.php">Home</a>
+                    <a class="nav-link active" href="index.php">Home</a>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active mt-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Animals
                         </a>
                         <ul class="dropdown-menu">
@@ -86,11 +86,13 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/seniorUser.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
                     <li class="nav-item dropdown">
                        <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $email ?>
                         </a>
-                        <a class="nav-link dropdown-toggle active" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
@@ -110,8 +112,6 @@ mysqli_close($connect);
                 <div class="card alert-info" style="border:none; width: 60%; margin: 0 auto;">
                     <div class="card-body text-center mt-2">
                         <h1>Welcome</h1>
-
-
                     </div>
                 </div>
             </div>
