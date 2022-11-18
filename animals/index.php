@@ -22,7 +22,7 @@
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="index.php">All</a></li>
+                            <li><a class="dropdown-item" href="../home.php">All</a></li>
                             <li><a class="dropdown-item" href="senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>

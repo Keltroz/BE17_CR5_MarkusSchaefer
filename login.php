@@ -42,7 +42,7 @@ require_once "components/db_connect.php";
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./animals/index.php">All</a></li>
+                            <li><a class="dropdown-item" href="home.php">All</a></li>
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>

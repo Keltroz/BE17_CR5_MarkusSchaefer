@@ -15,8 +15,7 @@ if (mysqli_num_rows($result) > 0) {
            <td>" . $article['size'] . "</td>
            <td>" . $article['age'] . " years</td>
            <td>" . $article['vaccinated'] . "</td>
-           <td>
-           <a href='details.php?id=" . $article["animal_id"] . "'><button class='btn btn-info' type='button'>Show Details</button></a>
+           <td><a href='details.php?id=" . $article["animal_id"] . "'><button class='btn btn-info' type='button'>Show Details</button></a></td>
            ";
     }
 } else {
@@ -76,7 +75,7 @@ if (mysqli_num_rows($result) > 0) {
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./animals/index.php">All</a></li>
+                            <li><a class="dropdown-item" href="home.php">All</a></li>
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>

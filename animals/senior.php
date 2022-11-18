@@ -7,14 +7,14 @@ $mysql = "SELECT * FROM animal WHERE age >= 8";
 $result = mysqli_query($connect, $mysql);
 
 if (mysqli_num_rows($result) > 0) {
-    while ($data = mysqli_fetch_assoc($result)) {
-        $list .=  "<tr><td class='text-center'><img class='image' src='../pictures/" . $data['photo'] . "'></td>
-                        <td class='text-center'>" . $data['name'] . "</td>
-                        <td class='text-center'>" . $data['size'] . "</td>
-                        <td class='text-center'>" . $data['age'] . "</td>
-                        <td class='text-center'>" . $data['description'] . "</td>
-                        <td class='text-center'>" . $data['vaccinated'] . "</td>
-                        <td class='text-center'>" . $data['breed'] . "</td>
+    while ($row = mysqli_fetch_assoc($result)) {
+        $list .=  "<tr><td class='text-center'><img class='image' src='../pictures/" . $row['photo'] . "'></td>
+                        <td class='text-center'>" . $row['name'] . "</td>
+                        <td class='text-center'>" . $row['size'] . "</td>
+                        <td class='text-center'>" . $row['age'] . "</td>
+                        <td class='text-center'>" . $row['description'] . "</td>
+                        <td class='text-center'>" . $row['vaccinated'] . "</td>
+                        <td class='text-center'>" . $row['breed'] . "</td>
                         </tr>";
     }
 } else {
@@ -34,15 +34,10 @@ if (mysqli_num_rows($result) > 0) {
     <?php require_once "../components/boot.php" ?>
     <style type="text/CSS">
 
-        .bg-container {
+        .animals {
         margin: 5% auto;
         width: 80%;
     }
-
-    html,
-    body {
-            background-color: antiquewhite;
-        }
 
         td,
         tr {
@@ -74,7 +69,7 @@ if (mysqli_num_rows($result) > 0) {
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="index.php">All</a></li>
+                            <li><a class="dropdown-item" href="../home.php">All</a></li>
                             <li><a class="dropdown-item" href="senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
@@ -83,8 +78,7 @@ if (mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </nav>
-    <div class="bg-container">
-        <div class="products">
+        <div class="animals">
             <p class="h1 text-center font-monospace text-decoration-underline mb-5">Details</p>
             <table class='table table-striped table-dark table-hover'>
                 <thead>
