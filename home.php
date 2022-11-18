@@ -1,27 +1,20 @@
 <?php
 
+session_start();
+
 require_once "components/db_connect.php";
 
-$mysql = "SELECT * FROM animal";
-$result = mysqli_query($connect, $mysql);
-$list = "";
-
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $list .= "
-        <tr>
-           <td><a href=''><img class='image' src='pictures/" . $row["photo"] . "'></a></td>
-           <td>" . $row['breed'] . "</td>
-           <td>" . $row['size'] . "</td>
-           <td>" . $row['age'] . " years</td>
-           <td>" . $row['vaccinated'] . "</td>
-           <td><a href='details.php?id=" . $row["animal_id"] . "'><button class='btn btn-info' type='button'>Show Details</button></a></td>
-           ";
-    }
-} else {
-    $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
+if (isset($_SESSION["user"])) {
+    header("Location: homeUser.php");
+    exit;
 }
 
+if (isset($_SESSION["admin"])) {
+    header("Location: dashboard.php");
+    exit;
+}
+
+mysqli_close($connect);
 ?>
 
 <!DOCTYPE html>
@@ -36,30 +29,10 @@ if (mysqli_num_rows($result) > 0) {
 </head>
 
 <style type="text/CSS">
-    .btn-secondary {
-        text-align: center;
-        margin: auto;
-        width: 20%;
-    }
-
-    .animals {
-            width: 80%;
-            margin: 0 auto;
-            padding-top: 5%;
-    }
-
-    td,
-    tr {
-        text-align: center;
-        vertical-align: middle;
-    
-    }
-
-    .image {
-        width: 300px;
+        .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
     }
 </style>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -85,26 +58,21 @@ if (mysqli_num_rows($result) > 0) {
         </div>
     </nav>
 
-    </div>
-    <div class="bg-container">
-        <div class="animals">
-            <p class="h1 text-center font-monospace text-decoration-underline mb-5">Pets available</p>
-            <table class='table table-striped table-dark table-hover'>
-                <thead>
-                    <tr>
-                        <th>Picture</th>
-                        <th>Breed</th>
-                        <th>Size</th>
-                        <th>Age</th>
-                        <th>Vaccinated</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?= $list ?>
-                </tbody>
-            </table>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-12 my-5">
+                <div class="card alert-danger" style="border:none; width: 50%; margin: 0 auto;">
+                    <div class="card-body text-center mt-2">
+                        <h1>Please log in to see our pets</h1>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a href="login.php"><button type="submit" class="btn btn-primary btn-lg btn-block" name="btn-login" style="width: 150px">Log in</button></a>
+                        </div>
+                        <p class="text-center text-muted mt-3">Don't have an account? <a href="register.php" class="fw-bold text-body"><u>Register here</u></a></p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 </body>
 
 </html>

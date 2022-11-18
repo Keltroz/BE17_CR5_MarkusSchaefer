@@ -4,8 +4,8 @@ session_start();
 
 require_once "components/db_connect.php";
 
-if (isset($_SESSION["user"])) {
-    header("Location: indexUser.php");
+if (!isset($_SESSION["user"])) {
+    header("Location: index.php");
     exit;
 }
 
@@ -35,6 +35,16 @@ if (mysqli_num_rows($result) > 0) {
     $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
 }
 
+$query = "SELECT * FROM user WHERE user_id = {$_SESSION['user']}";
+$result2 = mysqli_query($connect, $query);
+$row2 = mysqli_fetch_assoc($result2);
+
+$fname = $row2['first_name'];
+$lname = $row2['last_name'];
+$email = $row2['email'];
+$picture = $row2['picture'];
+$status = $row2['status'];
+
 mysqli_close($connect);
 
 ?>
@@ -51,6 +61,7 @@ mysqli_close($connect);
 </head>
 
 <style type="text/CSS">
+
     .nav-link:hover, .userNameNav:hover {
         text-decoration: underline !important; 
     }
@@ -59,23 +70,34 @@ mysqli_close($connect);
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand">Shelter</a>
+            <a class="navbar-brand mb-2">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" href="index.php">Home</a>
+                    <a class="nav-link active mt-2" href="index.php">Home</a>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle active mt-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="home.php">All</a></li>
-                            <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
+                            <li><a class="dropdown-item" href="homeUser.php">All</a></li>
+                            <li><a class="dropdown-item" href="./animals/seniorUser.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                    <li class="nav-item dropdown">
+                       <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= $email ?>
+                        </a>
+                        <a class="nav-link dropdown-toggle active" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="dashboardUser.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
+                        </ul>
+                    </li>
                 </div>
             </div>
         </div>
@@ -87,17 +109,15 @@ mysqli_close($connect);
             <div class="col-lg-12 my-5">
                 <div class="card alert-info" style="border:none; width: 60%; margin: 0 auto;">
                     <div class="card-body text-center mt-2">
-                        <h1>Welcome to Shelty</h1>
-                        <h3>Your shelter near you</h3>
-                        
-                        
+                        <h1>Welcome</h1>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <h3 class="text-center">You are searching for someone who gives unconditional love, then we may have the perfect fit for you</h3>
-    <p class="text-center">Please <a href="login.php" class="fw-bold text-body"><u>Log in</u></a> to see our pets</p>
+    <h3 class="text-center">Find your perfect fit <a href="login.php" class="fw-bold text-body"><u>here</u></a></h3>
 </body>
 
 </html>

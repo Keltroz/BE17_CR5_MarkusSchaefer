@@ -1,7 +1,20 @@
 <?php
 
+session_start();
+
 require_once "components/db_connect.php";
 require_once "components/file_upload.php";
+
+if (isset($_SESSION["user"])) {
+    header("Location: home.php");
+    exit;
+}
+
+if (isset($_SESSION["admin"])) {
+    header("Location: dashboard.php");
+    exit;
+
+}
 
 $error = false;
 
@@ -53,7 +66,7 @@ if (isset($_POST['btn-signup'])) {
     } elseif (strlen($lname) < 3) {
         $error = true;
         $lnameError = "Surname must have at least 3 characters";
-    } elseif (!preg_match("/^[a-zA-Z]+$/", $lname)) {
+    } elseif (!preg_match("/^[a-zA-Zäöü]+$/", $lname)) {
         $error = true;
         $lnameError = "Surname must contain only letter and no spaces";
     }
@@ -66,9 +79,6 @@ if (isset($_POST['btn-signup'])) {
     if (empty($phoneNumber)) {
         $error = true;
         $phoneNumberError = "Please enter your phone number";
-    } elseif (strlen($phoneNumber) < 7) {
-        $error = true;
-        $phoneNumberError = "Please enter a valid phone number";
     } elseif (!preg_match("/^[0-9+]+$/", $phoneNumber)) {
         $error = true;
         $phoneNumberError = "Phone number must contain only numbers and no spaces";
@@ -101,15 +111,15 @@ if (isset($_POST['btn-signup'])) {
     $passwordHash = hash('sha256', $password);
 
     if (!$error) {
-        $sql = "INSERT INTO user (first_name, last_name, address, phone_number, email, picture)
-        VALUES ('$fname', '$lname', '$address', '$phoneNumber', '$email', '$picture->fileName')";
+        $sql = "INSERT INTO user (first_name, last_name, address, phone_number, email, password, picture, status)
+        VALUES ('$fname', '$lname', '$address', '$phoneNumber', '$email', '$password', '$picture->fileName', 'user')";
 
         $result2 = mysqli_query($connect, $sql);
 
         if ($result2) {
             $errType = "success";
             $errMSG = "Successfully registered, you may login now";
-            $uploadError = ($picture->errorr != 0) ? $picture->ErrorrMessage : "";
+            $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : "";
         } else {
             $errType = "danger";
             $errMSG = "Something went wrong, try again later...";
@@ -117,6 +127,8 @@ if (isset($_POST['btn-signup'])) {
         }
     }
 }
+
+mysqli_close($connect);
 
 ?>
 
@@ -132,7 +144,7 @@ if (isset($_POST['btn-signup'])) {
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -190,7 +202,7 @@ if (isset($_POST['btn-signup'])) {
                             <div class="row">
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
                                     <div class="form-outline datepicker w-100">
-                                        <input class='form-control' type="text" name="phone_number" placeholder="Phone number" value="<?php echo $address ?>" />
+                                        <input class='form-control' type="text" name="phone_number" placeholder="Phone number" value="<?php echo $phoneNumber ?>" />
                                         <span class="text-danger"> <?php echo $phoneNumberError; ?> </span>
                                     </div>
                                 </div>
@@ -204,7 +216,7 @@ if (isset($_POST['btn-signup'])) {
                             <div class="row">
                                 <div class="col-md-12 mb-2 pb-2">
                                     <div class="form-outline">
-                                        <input type="email" name="address" class="form-control" placeholder="Enter Your Address" maxlength="150" value="<?php echo $address ?>" />
+                                        <input type="text" name="address" class="form-control" placeholder="Enter Your Address" maxlength="150" value="<?php echo $address ?>" />
                                         <span class="text-danger"> <?php echo $addressError; ?> </span>
                                     </div>
                                 </div>

@@ -37,16 +37,10 @@ if ($_GET["id"]) {
     <?php require_once "components/boot.php" ?>
     <style type="text/CSS">
 
-    .bg-container {
+    .animals {
         margin: 5% auto;
         width: 80%;
     }
-
-    html,
-    body {
-            background-color: antiquewhite;
-        }
-
         td,
         tr {
             text-align: center;
@@ -81,13 +75,12 @@ if ($_GET["id"]) {
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                    <a class="nav-link active" href="logout.php?logout">Logout</a>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="bg-container">
-        <div class="products">
+        <div class="animals">
             <p class="h1 text-center font-monospace text-decoration-underline mb-5">Details</p>
             <table class='table table-striped table-dark table-hover'>
                 <thead>

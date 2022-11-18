@@ -1,61 +1,37 @@
 <?php
 
+session_start();
+
 require_once "../components/db_connect.php";
 
-$list = "";
-$mysql = "SELECT * FROM animal WHERE age >= 8";
-$result = mysqli_query($connect, $mysql);
+if (isset($_SESSION["user"])) {
+    header("Location: seniorUser.php");
+    exit;
+}
 
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $list .=  "<tr><td class='text-center'><img class='image' src='../pictures/" . $row['photo'] . "'></td>
-                        <td class='text-center'>" . $row['name'] . "</td>
-                        <td class='text-center'>" . $row['size'] . "</td>
-                        <td class='text-center'>" . $row['age'] . "</td>
-                        <td class='text-center'>" . $row['description'] . "</td>
-                        <td class='text-center'>" . $row['vaccinated'] . "</td>
-                        <td class='text-center'>" . $row['breed'] . "</td>
-                        </tr>";
-    }
-} else {
-    $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
+if (isset($_SESSION["admin"])) {
+    header("Location: dashboard.php");
+    exit;
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Review 5</title>
     <?php require_once "../components/boot.php" ?>
-    <style type="text/CSS">
-
-        .animals {
-        margin: 5% auto;
-        width: 80%;
-    }
-
-        td,
-        tr {
-            text-align: center;
-            vertical-align: middle;
-            border-left: 1px solid white;
-            border-right: 1px solid white;
-        }
-
-        .image {
-            width: 200px;
-        }
-
-    </style>
 </head>
-
+<style type="text/CSS">
+        .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
+    }
+</style>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,25 +54,20 @@ if (mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </nav>
-        <div class="animals">
-            <p class="h1 text-center font-monospace text-decoration-underline mb-5">Details</p>
-            <table class='table table-striped table-dark table-hover'>
-                <thead>
-                    <tr>
-                        <th class="text-center">Picture</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Size</th>
-                        <th class="text-center">Age</th>
-                        <th class="text-center" style="width: 40%;">Description</th>
-                        <th class="text-center">Vaccinated</th>
-                        <th class="text-center" style="width: 10%">Breed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?= $list ?>
-                </tbody>
-            </table>
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-12 my-5">
+                <div class="card alert-danger" style="border:none; width: 60%; margin: 0 auto;">
+                    <div class="card-body text-center mt-2">
+                        <h1>Please log in to see our senior pets</h1>
+                        <div class="d-flex justify-content-center mt-3">
+                            <a href="../login.php"><button type="submit" class="btn btn-primary btn-lg btn-block" name="btn-login" style="width: 150px">Log in</button></a>
+                        </div>
+                        <p class="text-center text-muted mt-3">Don't have an account? <a href="../register.php" class="fw-bold text-body"><u>Register here</u></a></p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 </body>
-
 </html>

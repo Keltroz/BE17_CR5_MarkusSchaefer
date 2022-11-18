@@ -1,19 +1,70 @@
-<?php 
+<?php
 
 session_start();
 
-if(isset($_SESSION["user"])){
-    header("location: home.php");
-    exit;
-}
-
-if(isset($_SESSION["admin"])){
-    header("location: dashboard.php");
-    exit;
-}
-
 require_once "components/db_connect.php";
 
+if (isset($_SESSION["user"])) {
+    header("Location: home.php");
+    exit;
+}
+
+if (isset($_SESSION["admin"])) {
+    header("Location: dashboard.php");
+    exit;
+}
+
+
+$error = false;
+$email = $password = $emailError = $passwordError = "";
+
+if (isset($_POST['btn-login'])) {
+    // prevent sql injections/ clear user invalid inputs
+    $email = trim($_POST['email']);
+    $email = strip_tags($email);
+    $email = htmlspecialchars($email);
+
+    $password = trim($_POST['password']);
+    $password = strip_tags($password);
+    $password = htmlspecialchars($password);
+
+    if (empty($email)) {
+        $error = true;
+        $emailError = "Please enter your email address.";
+    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error = true;
+        $emailError = "Please enter valid email address.";
+    }
+    if (empty($password)) {
+        $error = true;
+        $passwordError = "Please enter your password.";
+    }
+
+    if (!$error) {
+        $passwordHash = hash('sha256', $password);
+        $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+        $result = mysqli_query($connect, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $count = mysqli_num_rows($result);
+
+        if ($count == 1) {
+            if ($row['status'] == "admin") {
+                $_SESSION['admin'] = $row['user_id'];
+                header("Location: dashboard.php");
+                exit;
+            } else {
+                $_SESSION['user'] = $row['user_id'];
+                header("Location: index.php");
+                exit;
+            }
+        } else {
+            $errMSG = "Incorrect Credentials, try again...";
+        }
+    }
+}
+
+mysqli_close($connect);
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +79,7 @@ require_once "components/db_connect.php";
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,11 +110,6 @@ require_once "components/db_connect.php";
                     <div class="card-body p-4 p-md-5">
                         <h3 class="pb-5 pb-md-0 pb-lg-0 mb-md-5">Login </h3>
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
-                            <?php
-                            if (isset($errMSG)) {
-                                echo $errMSG;
-                            }
-                            ?>
                             <div class="row">
                                 <div class="col-md-12 mb-2 pb-2">
                                     <div class="form-outline">
@@ -76,6 +122,11 @@ require_once "components/db_connect.php";
                                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Your Password" maxlength="25" />
                                         <span class="text-danger mx-2"><?php echo $passwordError ?></span>
                                     </div>
+                                    <span class="text-danger">
+                                        <?php if (isset($errMSG)) {
+                                            echo $errMSG;
+                                        } ?>
+                                    </span>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center">
