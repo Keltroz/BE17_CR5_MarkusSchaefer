@@ -28,8 +28,7 @@ require_once "components/db_connect.php";
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +37,15 @@ require_once "components/db_connect.php";
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" href="index.php">Home</a>
-                    <a class="nav-link active" href="./animals/index.php">Animals</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Animals
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="./animals/index.php">All</a></li>
+                            <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
+                        </ul>
+                    </li>
                     <a class="nav-link active" href="login.php">Login</a>
                 </div>
             </div>

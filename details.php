@@ -1,9 +1,3 @@
-<?php
-
-require_once "components/db_connect.php";
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +20,15 @@ require_once "components/db_connect.php";
                 <div class="navbar-nav">
                     <a class="nav-link active" href="index.php">Home</a>
                     <a class="nav-link active" href="./animals/index.php">Animals</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                        </ul>
+                    </li>
                     <a class="nav-link active" href="login.php">Login</a>
                 </div>
             </div>
