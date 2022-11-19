@@ -178,7 +178,7 @@ mysqli_close($connect);
                                         </tr>
                                         <tr>
                                             <th>Location</th>
-                                            <td><input class='form-control' type="text" name="location" placeholder="Price" step="any" /></td>
+                                            <td><input class='form-control' type="text" name="location" placeholder="Location" step="any" /></td>
                                         </tr>
                                         <tr>
                                             <th>Vaccinated</th>
