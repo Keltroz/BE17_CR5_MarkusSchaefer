@@ -28,14 +28,9 @@ mysqli_close($connect);
     <?php require_once "../components/boot.php" ?>
 
     <style type="text/CSS">
-        fieldset {
-            margin: 0 auto;
-            width: 40%;
-        }
-
         .dash-container {
             margin: 0 auto;
-            width: 90%;
+            width: 70%;
         }
     </style>
 </head>
@@ -183,7 +178,7 @@ mysqli_close($connect);
                                         </tr>
                                         <tr>
                                             <th>Location</th>
-                                            <td><input class='form-control' type="number" name="location" placeholder="Price" step="any" /></td>
+                                            <td><input class='form-control' type="text" name="location" placeholder="Price" step="any" /></td>
                                         </tr>
                                         <tr>
                                             <th>Vaccinated</th>
@@ -193,6 +188,10 @@ mysqli_close($connect);
                                                     <option value="none">No</option>
                                                 </select>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Description</th>
+                                            <td><input class='form-control' type="text" name="description" placeholder="Description" step="any"/></td>
                                         </tr>
                                         <tr>
                                             <th>Picture</th>
