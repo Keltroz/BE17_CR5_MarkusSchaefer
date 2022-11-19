@@ -93,14 +93,15 @@ mysqli_close($connect);
                 <div class="card alert-info" style="border:none; width: 60%; margin: 0 auto;">
                     <div class="card-body text-center mt-2">
                         <h1>Welcome to Shelty</h1>
-                        <h3>We have a pet for everyone</h3>
+                        <h3>We have a friend for everyone</h3>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <h3 class="text-center">You are searching for someone who gives you unconditional love, then we may have the perfect friend for you</h3>
-    <p class="text-center">Please <a href="login.php" class="fw-bold text-body"><u>Log in</u></a> to see our pets</p>
+    <p class="text-center mt-5">Please <a href="login.php" class="fw-bold text-body">Log in</a> to see our pets</p>
+    <p class="text-center">If you dont have an account register <a href="register.php" class="fw-bold text-body">here</a></p>
 </body>
 
 </html>

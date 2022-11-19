@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Error</title>
-        <?php require_once './components/boot.php'?>    
+        <?php require_once '../components/boot.php'?>    
     </head>
     <body>
-        <div class="container">  
+        <div class="container text-center">  
             <div class="mt-3 mb-3">
                 <h1>Invalid Request</h1>
             </div>

@@ -27,9 +27,18 @@ if($_POST){
 if (mysqli_query($connect, $mysql) === true) {
     $class = "success";
     $message = "The entry below was successfully created <br>
-        <table class='table w-50'><tr>
+        <table class='table text-center'><tr>
+        <td><b>Name</b></td>
+        <td><b>Breed</b></td>
+        <td><b>Size</b></td>
+        <td><b>Age</b></td>
+        <td><b>Location</b></td>
+        </tr><tr>
         <td> $name </td>
         <td> $breed </td>
+        <td> $size </td>
+        <td> $age </td>
+        <td> $location </td>
         </tr></table><hr>";
     $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
 } else {
@@ -50,16 +59,23 @@ mysqli_close($connect);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Review 5</title>
     <?php require_once "../../components/boot.php" ?>
+
+    <style type="text/CSS">
+        .request-container {
+            width: 30%;
+        }
+
+        .btn {
+            width: 80px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-        <div class="mt-3 mb-3">
-            <h1>Create request response</h1>
-        </div>
-        <div class="alert alert-<?= $class; ?>" role="alert">
-            <p><?php echo ($message) ?? ''; ?></p>
-            <p><?php echo ($uploadError) ?? ''; ?></p>
-            <a href='../../index.php'><button class="btn btn-primary" type='button'>Home</button></a>
+<div class="container text-center request-container mt-5">
+        <div class="alert alert-<?= $class ?>" role="alert">
+            <p class="fs-3"><?php echo ($message) ?? ''; ?></p>
+            <p class="fs-4"><?php echo ($uploadError) ?? ''; ?></p>
+            <a href='../../dashboard.php'><button class="btn btn-success" type='button'>Ok</button></a>
         </div>
     </div>
 </body>
