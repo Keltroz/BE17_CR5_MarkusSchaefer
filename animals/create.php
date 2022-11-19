@@ -73,9 +73,9 @@ mysqli_close($connect);
                                         <tr>
                                             <th>Vaccinated</th>
                                             <td>
-                                                <select name="vaccinated">
-                                                    <option value="none">Yes</option>
-                                                    <option value="none">No</option>
+                                                <select class="form-select" name="vaccinated">
+                                                    <option value="vaccinatedYes">Yes</option>
+                                                    <option value="vaccinatedNo">No</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -100,7 +100,7 @@ mysqli_close($connect);
             </div>
         </div>
     </div>
-    
+
 </body>
 
 </html>

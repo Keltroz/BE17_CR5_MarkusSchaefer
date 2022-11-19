@@ -46,6 +46,7 @@ if (mysqli_num_rows($result) > 0) {
            <td>" . $row2['size'] . "</td>
            <td>" . $row2['age'] . " years</td>
            <td>" . $row2['location'] . "</td>
+           <td>" . $row2['vaccinated'] . "</td>
            <td><a href='animals/update.php?id=" . $row2["animal_id"] . "'><button class='btn btn-primary me-1' type='button' style='width: 70px;'>Edit</button></a>
            <a href='animals/delete.php?id=" . $row2["animal_id"] . "'><button class='btn btn-danger ms-1' type='button' style='width: 70px;'>Delete</button></a></td>
            </tr>";
@@ -158,6 +159,7 @@ mysqli_close($connect);
                             <th>Size</th>
                             <th>Age</th>
                             <th>Location</th>
+                            <th>Vaccinated</th>
                             <th>Action</th>
                         </tr>
                     </thead>

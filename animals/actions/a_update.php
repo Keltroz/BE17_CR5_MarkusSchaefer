@@ -35,11 +35,11 @@ if ($_POST) {
     }
     if (mysqli_query($connect, $sql) === TRUE) {
         $class = "success";
-        $message = "The record was successfully updated";
+        $message = "The entry was successfully updated";
         $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
     } else {
         $class = "danger";
-        $message = "Error while updating record : <br>" . mysqli_connect_error();
+        $message = "Error while updating entry : <br>" . mysqli_connect_error();
         $uploadError = ($picture->error != 0) ? $picture->ErrorMessage : '';
     }
     mysqli_close($connect);
@@ -54,19 +54,26 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <title>Update</title>
-    <?php require_once '../../components/boot.php' ?>
+    <?php require_once "../../components/boot.php" ?>
+
+    <style type="text/CSS">
+        .alert-container {
+            width: 30%;
+        }
+            
+        .btn {
+            width: 80px;
+        }
+    </style>
+
 </head>
 
 <body>
-    <div class="container">
-        <div class="mt-3 mb-3">
-            <h1>Update request response</h1>
-        </div>
-        <div class="alert alert-<?php echo $class; ?>" role="alert">
-            <p><?php echo ($message) ?? ''; ?></p>
-            <p><?php echo ($uploadError) ?? ''; ?></p>
-            <a href='../update.php?id=<?= $id; ?>'><button class="btn btn-warning" type='button'>Back</button></a>
-            <a href='../index.php'><button class="btn btn-success" type='button'>Home</button></a>
+    <div class="container alert-container text-center mt-5">
+        <div class="alert alert-<?= $class ?>" role="alert">
+            <p class="fs-3"><?= ($message) ?? ''; ?></p>
+            <p class="fs-4"><?= ($uploadError) ?? ''; ?></p>
+            <a href="../../dashboard.php" class="btn btn-success" type="button">Ok</button></a>
         </div>
     </div>
 </body>
