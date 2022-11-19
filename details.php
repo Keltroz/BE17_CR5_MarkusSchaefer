@@ -101,7 +101,7 @@ mysqli_close($connect);
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li>
+                            <!-- <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li> -->
                             <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
                         </ul>
                     </li>

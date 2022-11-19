@@ -10,18 +10,18 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
 }
 
 if (isset($_SESSION["user"])) {
-    header("Location: home.php");
+    header("Location: dashboardUser.php");
     exit;
 }
 
 $status = 'admin';
-$sql = "SELECT * FROM user WHERE status != '$status'";
-$result = mysqli_query($connect, $sql);
-$tbody = '';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $tbody .= "<tr>
-            <td><img class='img-thumbnail rounded-circle' src='./pictures/" . $row['picture'] . "' alt=" . $row['first_name'] . "></td>
+$mysql = "SELECT * FROM user WHERE status != '$status'";
+$result = mysqli_query($connect, $mysql);
+$list = '';
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $list .= "<tr>
+            <td><img class='rounded-circle picture' src='./pictures/" . $row['picture'] . "' alt=" . $row['first_name'] . "></td>
             <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
             <td>" . $row['email'] . "</td>
             <td>" . $row['status'] . "</td>
@@ -30,19 +30,44 @@ if ($result->num_rows > 0) {
          </tr>";
     }
 } else {
-    $tbody = "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    $list = "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
 }
 
-$query = "SELECT * FROM user WHERE user_id = {$_SESSION['admin']}";
-$result2 = mysqli_query($connect, $query);
-$row2 = mysqli_fetch_assoc($result2);
+$mysql2 = "SELECT * FROM animal";
+$result2 = mysqli_query($connect, $mysql2);
+$list2 = "";
 
-$fname = $row2['first_name'];
-$lname = $row2['last_name'];
-$email = $row2['email'];
-$picture = $row2['picture'];
-$status = $row2['status'];
+if (mysqli_num_rows($result) > 0) {
+    while ($row2 = mysqli_fetch_assoc($result2)) {
+        $list2 .= "
+        <tr>
+           <td><img class='picture' src='pictures/" . $row2["photo"] . "'></td>
+           <td>" . $row2['breed'] . "</td>
+           <td>" . $row2['size'] . "</td>
+           <td>" . $row2['age'] . " years</td>
+           <td>" . $row2['vaccinated'] . "</td>
+           <td><a href='update.php?id=" . $row2["animal_id"] . "'><button class='btn btn-primary ms-2 me-2' type='button' style='width: 70px;'>Edit</button></a>
+           <a href='delete.php?id=" . $row2["animal_id"] . "'><button class='btn btn-danger ms-2' type='button' style='width: 70px;'>Delete</button></a></td>
+           ";
+    }
+} else {
+    $list2 = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
+}
+
+
+
+$query = "SELECT * FROM user WHERE user_id = {$_SESSION['admin']}";
+$result3 = mysqli_query($connect, $query);
+$row3 = mysqli_fetch_assoc($result3);
+
+$fname = $row3['first_name'];
+$lname = $row3['last_name'];
+$email = $row3['email'];
+$picture = $row3['picture'];
+$status = $row3['status'];
+
 mysqli_close($connect);
+
 ?>
 
 <!DOCTYPE html>
@@ -55,9 +80,9 @@ mysqli_close($connect);
     <title>Code Review 5</title>
     <?php require_once 'components/boot.php' ?>
     <style type="text/css">
-        .img-thumbnail {
-            width: 70px !important;
-            height: 70px !important;
+        .picture {
+            width: 100px;
+            height: 100px;
         }
 
         td,
@@ -66,9 +91,9 @@ mysqli_close($connect);
             vertical-align: middle;
         }
 
-        .userImage {
-            width: 100px;
-            height: auto;
+        .dash-container {
+            margin: auto;
+            width: 95%;
         }
     </style>
 </head>
@@ -111,19 +136,27 @@ mysqli_close($connect);
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="mt-5 dash-container">
         <div class="row">
-            <div class="col-lg-3 mt-5">
-                <div class="card-body text-center">
-                    <img src="pictures/admin_avatar.png" alt=" avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                    <h5 class="my-4">Administrator</h5>
-                    <div class="d-flex justify-content-center mb-2">
-                        <a class="btn btn-outline-primary ms-1" href="logout.php?logout">Log Out</a>
-                        <a class="btn btn-success ms-1" href="home.php">Pets</a>
-                    </div>
-                </div>
+            <div class="col mt-2 me-5">
+                <p class='h2 text-center mb-5'>Animals</p>
+                <table class='table align-middle mb-0 bg-white'>
+                    <thead class='table-light'>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Breed</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?= $list2 ?>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-lg-8 mt-2">
+            <div class="col mt-2 ms5">
                 <p class='h2 text-center mb-5'>Users</p>
                 <table class='table align-middle mb-0 bg-white'>
                     <thead class='table-light'>
@@ -136,7 +169,7 @@ mysqli_close($connect);
                         </tr>
                     </thead>
                     <tbody>
-                        <?= $tbody ?>
+                        <?= $list ?>
                     </tbody>
                 </table>
             </div>

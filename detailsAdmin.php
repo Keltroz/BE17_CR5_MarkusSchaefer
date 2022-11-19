@@ -6,8 +6,8 @@ require_once "components/db_connect.php";
 
 $list = "";
 if ($_GET["id"]) {
-    $article = $_GET["id"];
-    $mysql = "SELECT * FROM animal WHERE animal_id = '$article'";
+    $id = $_GET["id"];
+    $mysql = "SELECT * FROM animal WHERE animal_id = '$id'";
     $result = mysqli_query($connect, $mysql);
 
     if (mysqli_num_rows($result) == 1) {

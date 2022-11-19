@@ -10,7 +10,7 @@ if (isset($_SESSION["user"])) {
 }
 
 if (isset($_SESSION["admin"])) {
-    header("Location: seniorAdmin.php");
+    header("Location: seniorUser.php");
     exit;
 }
 

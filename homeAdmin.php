@@ -27,9 +27,7 @@ if (mysqli_num_rows($result) > 0) {
            <td>" . $row['size'] . "</td>
            <td>" . $row['age'] . " years</td>
            <td>" . $row['vaccinated'] . "</td>
-           <td><a href='detailsAdmin.php?id=" . $row["animal_id"] . "'><button class='btn btn-info me-2' type='button'>Show Details</button></a>
-           <a href='update.php?id=" . $row["animal_id"] . "'><button class='btn btn-primary ms-2 me-2' type='button' style='width: 70px;'>Edit</button></a>
-           <a href='delete.php?id=" . $row["animal_id"] . "'><button class='btn btn-danger ms-2' type='button' style='width: 70px;'>Delete</button></a></td>
+           <td><a href='detailsAdmin.php?id=" . $row["animal_id"] . "'><button class='btn btn-info me-2' type='button'>Show Details</button></a></td>
            ";
     }
 } else {
