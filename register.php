@@ -143,8 +143,14 @@ mysqli_close($connect);
     <?php require_once "components/boot.php" ?>
 </head>
 
+<style type="text/CSS">
+    .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
+    }
+</style>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,11 +168,18 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="login.php">Login</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </nav>
+    
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">

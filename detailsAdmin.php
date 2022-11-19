@@ -12,7 +12,7 @@ if ($_GET["id"]) {
 
     if (mysqli_num_rows($result) == 1) {
         while ($data = mysqli_fetch_assoc($result)) {
-            $list .=  "<tr><td rowspan='2' class='text-center'><img class='image img-fluid' src='pictures/" . $data['photo'] . "' style='width: 400px;'></td>
+            $list .=  "<tr><td class='text-center'><img class='image img-fluid' src='pictures/" . $data['photo'] . "' style='width: 400px;'></td></tr>
                         <td>" . $data['name'] . "</td>
                         <td>" . $data['size'] . "</td>
                         <td>" . $data['age'] . "</td>
@@ -38,6 +38,19 @@ $email = $row2['email'];
 $picture = $row2['picture'];
 $status = $row2['status'];
 
+$query2 = "SELECT * FROM animal WHERE animal_id = '$id'";
+$result3 = mysqli_query($connect, $query2);
+$row3 = mysqli_fetch_assoc($result3);
+
+$animalName = $row3['name'];
+$breed = $row3['breed'];
+$size = $row3['size'];
+$age = $row3['age'];
+$location = $row3['location'];
+$vaccinated = $row3['vaccinated'];
+$description = $row3['description'];
+$pictureAnimal = $row3['photo'];
+
 mysqli_close($connect);
 
 ?>
@@ -53,22 +66,26 @@ mysqli_close($connect);
     <?php require_once "components/boot.php" ?>
     <style type="text/CSS">
 
-    .animals {
+        .animals {
         margin: 5% auto;
         width: 80%;
     }
-        td,
-        tr {
+        td, tr {
             text-align: center;
             vertical-align: middle;
-            border-left: 1px solid white;
-            border-right: 1px solid white;
         }
 
-        .image {
-            width: 100px;
+        html, body {
+            background-color: antiquewhite;
         }
 
+        .card {
+            background-color: rgb(245, 244, 241);
+        }
+
+        .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
+        }
     </style>
 </head>
 
@@ -94,7 +111,7 @@ mysqli_close($connect);
                 </div>
                 <div style="margin-left:auto; margin-right: 20px;">
                     <li class="nav-item dropdown">
-                    <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $email ?>
                         </a>
                         <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -109,24 +126,58 @@ mysqli_close($connect);
             </div>
         </div>
     </nav>
-        <div class="animals">
-            <p class="h1 text-center font-monospace text-decoration-underline mb-5">Details</p>
-            <table class='table table-striped table-dark table-hover'>
-                <thead>
-                    <tr>
-                        <th class="text-center">Image</th>
-                        <th class="text-center">Title</th>
-                        <th class="text-center">Author</th>
-                        <th class="text-center">ISBN</th>
-                        <th class="text-center">Availability</th>
-                        <th class="text-center">Breed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?= $list ?>
-                </tbody>
+
+    <div class="container text-center">
+        <div class="card mt-5 pt-5 pe-5 pb-4 ps-5">
+            <div class="row">
+                <div class="col-6">
+                    <img src="pictures/<?= $pictureAnimal ?>" class="img-fluid" style="width: 100%; height: 100%;" alt="">
+                </div>
+
+
+                <div class="col-6">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <h3><b><?= $animalName ?></b></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <table class="table table-light mt-3">
+                            <tr>
+                                <th class="bg-danger">Breed</th>
+                                <td><?= $breed ?></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-warning">Size</th>
+                                <td><?= $size ?></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-success">Age</th>
+                                <td><?= $age ?></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-primary">Location</th>
+                                <td><?= $location ?></td>
+                            </tr>
+                            <tr>
+                                <th class="bg-info">Vaccinated</th>
+                                <td><?= $vaccinated ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-light mt-5">
+                <tr>
+                    <th class="bg-info">Description</th>
+                </tr>
+                <tr>
+                    <td><?= $description ?></td>
+                </tr>
             </table>
+            <button class="btn btn-primary mt-4" style="width: 80px; display: block; margin: 0 auto" onclick="history.back()">Back</button>
         </div>
+    </div>
 </body>
 
 </html>

@@ -20,14 +20,15 @@ $result = mysqli_query($connect, $mysql);
 
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $list .=  "<tr><td class='text-center'><img class='image' src='../pictures/" . $row['photo'] . "'></td>
-                        <td class='text-center'>" . $row['name'] . "</td>
-                        <td class='text-center'>" . $row['size'] . "</td>
-                        <td class='text-center'>" . $row['age'] . "</td>
-                        <td class='text-center'>" . $row['description'] . "</td>
-                        <td class='text-center'>" . $row['vaccinated'] . "</td>
-                        <td class='text-center'>" . $row['breed'] . "</td>
-                        </tr>";
+        $list .=  "
+        <tr>
+        <td style='border-left: none !important'><img class='image' src='../pictures/" . $row["photo"] . "'></td>
+        <td>" . $row['breed'] . "</td>
+        <td>" . $row['size'] . "</td>
+        <td>" . $row['age'] . " years</td>
+        <td>" . $row['vaccinated'] . "</td>
+        <td style='border-right: none !important'><a href='../detailsAdmin.php?id=" . $row["animal_id"] . "'><button class='btn btn-info me-2' type='button'>Show Details</button></a></td>
+        ";
     }
 } else {
     $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
@@ -61,18 +62,25 @@ $status = $row2['status'];
         width: 80%;
     }
 
-        td,
-        tr {
+        td {
             text-align: center;
             vertical-align: middle;
-            border-left: 1px solid white;
-            border-right: 1px solid white;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
         }
 
         .image {
             width: 200px;
         }
 
+        html, body {
+            background-color: antiquewhite;
+        }
+
+        .btn-back {
+            width: 80px;
+            float: right;
+        }
     </style>
 </head>
 
@@ -115,22 +123,22 @@ $status = $row2['status'];
     </nav>
     <div class="animals">
         <p class="h1 text-center text-decoration-underline mb-5">Senior Pets Available</p>
-        <table class='table table-striped table-dark table-hover'>
+        <table class='table table-striped table-secondary table-hover'>
             <thead>
                 <tr>
                     <th class="text-center">Picture</th>
-                    <th class="text-center">Name</th>
+                    <th class="text-center">Breed</th>
                     <th class="text-center">Size</th>
                     <th class="text-center">Age</th>
-                    <th class="text-center" style="width: 40%;">Description</th>
                     <th class="text-center">Vaccinated</th>
-                    <th class="text-center" style="width: 10%">Breed</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?= $list ?>
             </tbody>
         </table>
+        <button class="btn btn-primary mt-3 fs-5 btn-back">Back</button>
     </div>
 </body>
 

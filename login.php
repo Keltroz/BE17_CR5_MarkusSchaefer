@@ -78,8 +78,14 @@ mysqli_close($connect);
     <?php require_once "components/boot.php" ?>
 </head>
 
+<style type="text/CSS">
+    .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
+    }
+</style>
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +103,13 @@ mysqli_close($connect);
                             <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
-                    <a class="nav-link active" href="login.php">Login</a>
+                </div>
+                <div style="margin-left:auto; margin-right: 20px;">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="login.php">Login</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -109,18 +121,18 @@ mysqli_close($connect);
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
                         <h3 class="pb-5 pb-md-0 pb-lg-0 mb-md-5">Login </h3>
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
+                        <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-12 mb-2 pb-2">
                                     <div class="form-outline">
-                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email" maxlength="50" value="<?php echo $email ?>" />
-                                        <span class="text-danger mx-2"><?php echo $emailError ?></span>
+                                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email" maxlength="50" value="<?= $email ?>" />
+                                        <span class="text-danger mx-2"><?= $emailError ?></span>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-4 pb-2">
                                     <div class="form-outline">
                                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Your Password" maxlength="25" />
-                                        <span class="text-danger mx-2"><?php echo $passwordError ?></span>
+                                        <span class="text-danger mx-2"><?= $passwordError ?></span>
                                     </div>
                                     <span class="text-danger">
                                         <?php if (isset($errMSG)) {

@@ -4,7 +4,7 @@ session_start();
 
 require_once "components/db_connect.php";
 
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
     header("Location: home.php");
     exit;
 }
@@ -22,12 +22,13 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $list .= "
         <tr>
-           <td><img class='image' src='pictures/" . $row["photo"] . "'></td>
+           <td style='border-left: none !important'><img class='image' src='pictures/" . $row["photo"] . "'></td>
+           <td>" . $row['name'] . "</td>
            <td>" . $row['breed'] . "</td>
            <td>" . $row['size'] . "</td>
            <td>" . $row['age'] . " years</td>
            <td>" . $row['vaccinated'] . "</td>
-           <td><a href='details.php?id=" . $row["animal_id"] . "'><button class='btn btn-info' type='button'>Show Details</button></a></td>
+           <td style='border-right: none !important'><a href='details.php?id=" . $row["animal_id"] . "'><button class='btn btn-info me-2' type='button'>Show Details</button></a></td>
            ";
     }
 } else {
@@ -66,17 +67,28 @@ mysqli_close($connect);
             padding-top: 5%;
     }
 
-    td,
-    tr {
+    td {
         text-align: center;
         vertical-align: middle;
-        border-left: 1px solid white;
-        border-right: 1px solid white;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
     
+    }
+
+    tr {
+        text-align: center;
     }
 
     .image {
         width: 200px;
+    }
+
+    html, body {
+        background-color: antiquewhite;
+    }
+
+    .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
     }
 </style>
 
@@ -109,6 +121,7 @@ mysqli_close($connect);
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li>
                             <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
                         </ul>
                     </li>
@@ -120,10 +133,11 @@ mysqli_close($connect);
     <div class="bg-container">
         <div class="animals">
             <p class="h1 text-center text-decoration-underline mb-5">Pets Available</p>
-            <table class='table table-striped table-dark table-hover'>
+            <table class='table table-striped table-secondary table-hover'>
                 <thead>
                     <tr>
                         <th>Picture</th>
+                        <th>Name</th>
                         <th>Breed</th>
                         <th>Size</th>
                         <th>Age</th>

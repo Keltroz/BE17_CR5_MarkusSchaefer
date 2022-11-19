@@ -14,7 +14,7 @@ if (isset($_SESSION["user"])) {
     exit;
 }
 
-$status = 'admin';
+$status = 'newcomer';
 $mysql = "SELECT * FROM user WHERE status != '$status'";
 $result = mysqli_query($connect, $mysql);
 $list = '';
@@ -24,20 +24,21 @@ if (mysqli_num_rows($result) > 0) {
             <td><img class='rounded-circle picture' src='./pictures/" . $row['picture'] . "' alt=" . $row['first_name'] . "></td>
             <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
             <td>" . $row['email'] . "</td>
+            <td>" . $row['address'] . "</td>
+            <td>" . $row['phone_number'] . "</td>
             <td>" . $row['status'] . "</td>
-            <td><a href='update.php?id=" . $row['user_id'] . "'><button class='btn btn-primary me-1' type='button'>Edit</button></a>
-            <a href='delete.php?id=" . $row['user_id'] . "'><button class='btn btn-danger ms-1' type='button'>Delete</button></a></td>
+            <td><a href='delete.php?id=" . $row['user_id'] . "'><button class='btn btn-danger ms-1' type='button'>Delete</button></a></td>
          </tr>";
     }
 } else {
-    $list = "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    $list = "<tr><td colspan='7' class='text-center'>No Data Available</td></tr>";
 }
 
 $mysql2 = "SELECT * FROM animal";
 $result2 = mysqli_query($connect, $mysql2);
 $list2 = "";
 
-if (mysqli_num_rows($result) > 0) {
+if (mysqli_num_rows($result2) > 0) {
     while ($row2 = mysqli_fetch_assoc($result2)) {
         $list2 .= "
         <tr>
@@ -52,7 +53,7 @@ if (mysqli_num_rows($result) > 0) {
            </tr>";
     }
 } else {
-    $list2 = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
+    $list2 = "<tr><td colspan='7' class='text-center'>No data available</td></tr>";
 }
 
 
@@ -65,7 +66,7 @@ $fname = $row3['first_name'];
 $lname = $row3['last_name'];
 $email = $row3['email'];
 $picture = $row3['picture'];
-$status = $row3['status'];
+$status3 = $row3['status'];
 
 mysqli_close($connect);
 
@@ -105,6 +106,10 @@ mysqli_close($connect);
 
         .btn.hidden:hover {
             pointer-events: none;
+        }
+
+        .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
         }
     </style>
 </head>
@@ -176,6 +181,8 @@ mysqli_close($connect);
                             <th>Picture</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
