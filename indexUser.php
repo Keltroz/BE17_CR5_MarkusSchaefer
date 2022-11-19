@@ -9,11 +9,10 @@ if (!isset($_SESSION["user"])) {
     exit;
 }
 
-// if (isset($_SESSION["admin"])) {
-//     header("Location: dashboard.php");
-//     exit;
-
-// }
+if (isset($_SESSION["admin"])) {
+    header("Location: indexAdmin.php");
+    exit;
+}
 
 $mysql = "SELECT * FROM animal";
 $result = mysqli_query($connect, $mysql);
@@ -82,8 +81,8 @@ mysqli_close($connect);
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="homeUser.php">All</a></li>
-                            <li><a class="dropdown-item" href="./animals/seniorUser.php">Senior (8+ years)</a></li>
+                            <li><a class="dropdown-item" href="home.php">All</a></li>
+                            <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
                 </div>
@@ -96,7 +95,7 @@ mysqli_close($connect);
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="dashboardUser.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li>
                             <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
                         </ul>
                     </li>
@@ -111,13 +110,13 @@ mysqli_close($connect);
             <div class="col-lg-12 my-5">
                 <div class="card alert-info" style="border:none; width: 60%; margin: 0 auto;">
                     <div class="card-body text-center mt-2">
-                        <h1>Welcome</h1>
+                        <h1>Welcome <?= $fname ?></h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <h3 class="text-center">Find your perfect fit <a href="login.php" class="fw-bold text-body"><u>here</u></a></h3>
+    <h3 class="text-center">Find your perfect match <a href="home.php" class="fw-bold text-body"><u>here</u></a></h3>
 </body>
 
 </html>

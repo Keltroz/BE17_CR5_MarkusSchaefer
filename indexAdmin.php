@@ -2,35 +2,36 @@
 
 session_start();
 
-require_once 'components/db_connect.php';
+require_once "components/db_connect.php";
 
-if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
     header("Location: index.php");
     exit;
 }
 
 if (isset($_SESSION["user"])) {
-    header("Location: home.php");
+    header("Location: indexUser.php");
     exit;
 }
 
-$status = 'admin';
-$sql = "SELECT * FROM user WHERE status != '$status'";
-$result = mysqli_query($connect, $sql);
-$tbody = '';
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $tbody .= "<tr>
-            <td><img class='img-thumbnail rounded-circle' src='./pictures/" . $row['picture'] . "' alt=" . $row['first_name'] . "></td>
-            <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
-            <td>" . $row['email'] . "</td>
-            <td>" . $row['status'] . "</td>
-            <td><a href='update.php?id=" . $row['user_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
-            <a href='delete.php?id=" . $row['user_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
-         </tr>";
+$mysql = "SELECT * FROM animal";
+$result = mysqli_query($connect, $mysql);
+$list = "";
+
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $list .= "
+        <tr>
+           <td><a href=''><img class='image' src='pictures/" . $row["photo"] . "'></a></td>
+           <td>" . $row['breed'] . "</td>
+           <td>" . $row['size'] . "</td>
+           <td>" . $row['age'] . " years</td>
+           <td>" . $row['vaccinated'] . "</td>
+           <td><a href='details.php?id=" . $row["animal_id"] . "'><button class='btn btn-info' type='button'>Show Details</button></a></td>
+           ";
     }
 } else {
-    $tbody = "<tr><td colspan='5'><center>No Data Available </center></td></tr>";
+    $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
 }
 
 $query = "SELECT * FROM user WHERE user_id = {$_SESSION['admin']}";
@@ -42,7 +43,9 @@ $lname = $row2['last_name'];
 $email = $row2['email'];
 $picture = $row2['picture'];
 $status = $row2['status'];
+
 mysqli_close($connect);
+
 ?>
 
 <!DOCTYPE html>
@@ -53,25 +56,15 @@ mysqli_close($connect);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Review 5</title>
-    <?php require_once 'components/boot.php' ?>
-    <style type="text/css">
-        .img-thumbnail {
-            width: 70px !important;
-            height: 70px !important;
-        }
-
-        td,
-        tr {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .userImage {
-            width: 100px;
-            height: auto;
-        }
-    </style>
+    <?php require_once "components/boot.php" ?>
 </head>
+
+<style type="text/CSS">
+
+    .nav-link:hover, .userNameNav:hover {
+        text-decoration: underline !important; 
+    }
+</style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -95,7 +88,7 @@ mysqli_close($connect);
                 </div>
                 <div style="margin-left:auto; margin-right: 20px;">
                     <li class="nav-item dropdown">
-                        <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                       <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $email ?>
                         </a>
                         <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -111,37 +104,19 @@ mysqli_close($connect);
         </div>
     </nav>
 
-    <div class="container mt-5">
+    </div>
+    <div class="container py-5">
         <div class="row">
-            <div class="col-lg-3 mt-5">
-                <div class="card-body text-center">
-                    <img src="pictures/admin_avatar.png" alt=" avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                    <h5 class="my-4">Administrator</h5>
-                    <div class="d-flex justify-content-center mb-2">
-                        <a class="btn btn-outline-primary ms-1" href="logout.php?logout">Log Out</a>
-                        <a class="btn btn-success ms-1" href="home.php">Pets</a>
+            <div class="col-lg-12 my-5">
+                <div class="card alert-info" style="border:none; width: 60%; margin: 0 auto;">
+                    <div class="card-body text-center mt-2">
+                        <h1>Welcome <?= $fname ?></h1>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 mt-2">
-                <p class='h2 text-center mb-5'>Users</p>
-                <table class='table align-middle mb-0 bg-white'>
-                    <thead class='table-light'>
-                        <tr>
-                            <th>Picture</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?= $tbody ?>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
+    <h3 class="text-center">Find your perfect match <a href="home.php" class="fw-bold text-body"><u>here</u></a></h3>
 </body>
 
 </html>

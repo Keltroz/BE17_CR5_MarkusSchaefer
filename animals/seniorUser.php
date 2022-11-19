@@ -4,13 +4,13 @@ session_start();
 
 require_once "../components/db_connect.php";
 
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
     header("Location: senior.php");
     exit;
 }
 
 if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
+    header("Location: seniorAdmin.php");
     exit;
 }
 
@@ -92,7 +92,7 @@ $status = $row2['status'];
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="../home.php">All</a></li>
-                            <li><a class="dropdown-item" href="seniorUser.php">Senior (8+ years)</a></li>
+                            <li><a class="dropdown-item" href="senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
                 </div>
@@ -105,7 +105,7 @@ $status = $row2['status'];
                             <img src='../pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="dashboardUser.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="../dashboard.php">Dashboard</a></li>
                             <li><a class="dropdown-item" href="../logout.php?logout">Logout</a></li>
                         </ul>
                     </li>

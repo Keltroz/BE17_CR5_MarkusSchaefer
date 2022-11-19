@@ -10,7 +10,7 @@ if (!isset($_SESSION["user"])) {
 }
 
 if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
+    header("Location: homeAdmin.php");
     exit;
 }
 
@@ -95,8 +95,8 @@ mysqli_close($connect);
                             Animals
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="index.php">All</a></li>
-                            <li><a class="dropdown-item" href="./animals/seniorUser.php">Senior (8+ years)</a></li>
+                            <li><a class="dropdown-item" href="home.php">All</a></li>
+                            <li><a class="dropdown-item" href="./animals/senior.php">Senior (8+ years)</a></li>
                         </ul>
                     </li>
                 </div>
@@ -109,7 +109,7 @@ mysqli_close($connect);
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="dashboardUser.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="dashboard.php">Dashboard</a></li>
                             <li><a class="dropdown-item" href="logout.php?logout">Logout</a></li>
                         </ul>
                     </li>

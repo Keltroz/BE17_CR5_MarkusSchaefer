@@ -4,31 +4,39 @@ session_start();
 
 require_once "components/db_connect.php";
 
-$list = "";
-if ($_GET["id"]) {
-    $article = $_GET["id"];
-    $mysql = "SELECT * FROM animal WHERE animal_id = '$article'";
-    $result = mysqli_query($connect, $mysql);
-
-    if (mysqli_num_rows($result) == 1) {
-        while ($data = mysqli_fetch_assoc($result)) {
-            $list .=  "<tr><td rowspan='2' class='text-center'><img class='image img-fluid' src='pictures/" . $data['photo'] . "' style='width: 400px;'></td>
-                        <td>" . $data['name'] . "</td>
-                        <td>" . $data['size'] . "</td>
-                        <td>" . $data['age'] . "</td>
-                        <td>" . $data['vaccinated'] . "</td>
-                        <td>" . $data['breed'] . "</td>
-                        </tr>
-                        <tr>
-                        <td colspan='5'>" . $data['description'] . "</td>
-                        </tr>";
-        }
-    } else {
-        $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
-    }
+if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
+    header("Location: home.php");
+    exit;
 }
 
-$query = "SELECT * FROM user WHERE user_id = {$_SESSION['user']}";
+if (isset($_SESSION["user"])) {
+    header("Location: homeUser.php");
+    exit;
+}
+
+$mysql = "SELECT * FROM animal";
+$result = mysqli_query($connect, $mysql);
+$list = "";
+
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $list .= "
+        <tr>
+           <td><img class='image' src='pictures/" . $row["photo"] . "'></td>
+           <td>" . $row['breed'] . "</td>
+           <td>" . $row['size'] . "</td>
+           <td>" . $row['age'] . " years</td>
+           <td>" . $row['vaccinated'] . "</td>
+           <td><a href='detailsAdmin.php?id=" . $row["animal_id"] . "'><button class='btn btn-info me-2' type='button'>Show Details</button></a>
+           <a href='update.php?id=" . $row["animal_id"] . "'><button class='btn btn-primary ms-2 me-2' type='button' style='width: 70px;'>Edit</button></a>
+           <a href='delete.php?id=" . $row["animal_id"] . "'><button class='btn btn-danger ms-2' type='button' style='width: 70px;'>Delete</button></a></td>
+           ";
+    }
+} else {
+    $list = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
+}
+
+$query = "SELECT * FROM user WHERE user_id = {$_SESSION['admin']}";
 $result2 = mysqli_query($connect, $query);
 $row2 = mysqli_fetch_assoc($result2);
 
@@ -51,31 +59,33 @@ mysqli_close($connect);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Review 5</title>
     <?php require_once "components/boot.php" ?>
-    <style type="text/CSS">
-
-    .animals {
-        margin: 5% auto;
-        width: 80%;
-    }
-        td,
-        tr {
-            text-align: center;
-            vertical-align: middle;
-            border-left: 1px solid white;
-            border-right: 1px solid white;
-        }
-
-        .image {
-            width: 100px;
-        }
-
-    </style>
 </head>
+
+<style type="text/CSS">
+    .animals {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 5%;
+    }
+
+    td,
+    tr {
+        text-align: center;
+        vertical-align: middle;
+        border-left: 1px solid white;
+        border-right: 1px solid white;
+    
+    }
+
+    .image {
+        width: 200px;
+    }
+</style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand">Shelter</a>
+            <a class="navbar-brand mb-1">Shelter</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -97,7 +107,7 @@ mysqli_close($connect);
                     <a class="userNameNav active ms-2 text-light text-decoration-none" style="display:inline-block" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $email ?>
                         </a>
-                        <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-light" style="display:inline-block; text-decoration: none !important;"" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src='pictures/<?= $picture ?>' class="rounded-circle img-fluid" style="width: 45px; height: 45px">
                         </a>
                         <ul class="dropdown-menu">
@@ -109,17 +119,19 @@ mysqli_close($connect);
             </div>
         </div>
     </nav>
+
+    <div class="bg-container">
         <div class="animals">
-            <p class="h1 text-center font-monospace text-decoration-underline mb-5">Details</p>
+            <p class="h1 text-center text-decoration-underline mb-5">Pets Available</p>
             <table class='table table-striped table-dark table-hover'>
                 <thead>
                     <tr>
-                        <th class="text-center">Image</th>
-                        <th class="text-center">Title</th>
-                        <th class="text-center">Author</th>
-                        <th class="text-center">ISBN</th>
-                        <th class="text-center">Availability</th>
-                        <th class="text-center">Breed</th>
+                        <th>Picture</th>
+                        <th>Breed</th>
+                        <th>Size</th>
+                        <th>Age</th>
+                        <th>Vaccinated</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

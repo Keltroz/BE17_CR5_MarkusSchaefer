@@ -9,11 +9,10 @@ if (isset($_SESSION["user"])) {
     exit;
 }
 
-// if (isset($_SESSION["admin"])) {
-//     header("Location: dashboard.php");
-//     exit;
-
-// }
+if (isset($_SESSION["admin"])) {
+    header("Location: indexAdmin.php");
+    exit;
+}
 
 $mysql = "SELECT * FROM animal";
 $result = mysqli_query($connect, $mysql);

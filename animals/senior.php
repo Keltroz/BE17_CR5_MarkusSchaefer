@@ -10,7 +10,7 @@ if (isset($_SESSION["user"])) {
 }
 
 if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
+    header("Location: seniorAdmin.php");
     exit;
 }
 
@@ -55,7 +55,7 @@ if (isset($_SESSION["admin"])) {
                 <div style="margin-left:auto; margin-right: 20px;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="login.php">Login</a>
+                            <a class="nav-link active" href="../login.php">Login</a>
                         </li>
                     </ul>
                 </div>
