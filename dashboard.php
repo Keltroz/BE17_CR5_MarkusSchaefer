@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
 }
 
 if (isset($_SESSION["user"])) {
-    header("Location: dashboardUser.php");
+    header("Location: index.php");
     exit;
 }
 
@@ -25,8 +25,8 @@ if (mysqli_num_rows($result) > 0) {
             <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
             <td>" . $row['email'] . "</td>
             <td>" . $row['status'] . "</td>
-            <td><a href='update.php?id=" . $row['user_id'] . "'><button class='btn btn-primary btn-sm' type='button'>Edit</button></a>
-            <a href='delete.php?id=" . $row['user_id'] . "'><button class='btn btn-danger btn-sm' type='button'>Delete</button></a></td>
+            <td><a href='update.php?id=" . $row['user_id'] . "'><button class='btn btn-primary me-1' type='button'>Edit</button></a>
+            <a href='delete.php?id=" . $row['user_id'] . "'><button class='btn btn-danger ms-1' type='button'>Delete</button></a></td>
          </tr>";
     }
 } else {
@@ -45,10 +45,10 @@ if (mysqli_num_rows($result) > 0) {
            <td>" . $row2['breed'] . "</td>
            <td>" . $row2['size'] . "</td>
            <td>" . $row2['age'] . " years</td>
-           <td>" . $row2['vaccinated'] . "</td>
-           <td><a href='update.php?id=" . $row2["animal_id"] . "'><button class='btn btn-primary ms-2 me-2' type='button' style='width: 70px;'>Edit</button></a>
-           <a href='delete.php?id=" . $row2["animal_id"] . "'><button class='btn btn-danger ms-2' type='button' style='width: 70px;'>Delete</button></a></td>
-           ";
+           <td>" . $row2['location'] . "</td>
+           <td><a href='update.php?id=" . $row2["animal_id"] . "'><button class='btn btn-primary me-1' type='button' style='width: 70px;'>Edit</button></a>
+           <a href='delete.php?id=" . $row2["animal_id"] . "'><button class='btn btn-danger ms-1' type='button' style='width: 70px;'>Delete</button></a></td>
+           </tr>";
     }
 } else {
     $list2 = "<tr><td colspan='4' class='text-center'>No data available</td></tr>";
@@ -95,6 +95,16 @@ mysqli_close($connect);
             margin: auto;
             width: 95%;
         }
+
+        .btn-hidden {
+            background-color: transparent;
+            border-color: transparent;
+            color: transparent; 
+        }
+
+        .btn.hidden:hover {
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -138,16 +148,16 @@ mysqli_close($connect);
 
     <div class="mt-5 dash-container">
         <div class="row">
-            <div class="col mt-2 me-5">
-                <p class='h2 text-center mb-5'>Animals</p>
-                <table class='table align-middle mb-0 bg-white'>
+            <div class="col mt-2 me-5 text-center">
+                <p class='h2' style="display: inline-block;">Animals<button class='btn btn-primary mb-2 ms-5' style="float: right" type="button" onclick="window.location.href='./animals/create.php'">Add Animal</button></p>
+                <table class='table align-middle bg-white'>
                     <thead class='table-light'>
                         <tr>
                             <th>Picture</th>
-                            <th>Name</th>
-                            <th>Size</th>
                             <th>Breed</th>
-                            <th>Status</th>
+                            <th>Size</th>
+                            <th>Age</th>
+                            <th>Location</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -157,8 +167,8 @@ mysqli_close($connect);
                 </table>
             </div>
             <div class="col mt-2 ms5">
-                <p class='h2 text-center mb-5'>Users</p>
-                <table class='table align-middle mb-0 bg-white'>
+                <p class='h2 text-center mb-3'>Users</p>
+                <table class='table align-middle bg-white'>
                     <thead class='table-light'>
                         <tr>
                             <th>Picture</th>
